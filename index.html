@@ -4,58 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruta del Éxito Comercial: Protección Legal y Estándares de Excelencia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --ccl-blue: #3B72B9;
-            --ccl-blue-dark: #2B5793;
             --ccl-orange: #E8833A;
-            --ccl-orange-hover: #D6722B;
-            --fede-navy: #003352;
-            --fede-navy-dark: #002238;
-            --fede-gray: #8A9A86;
+            --fede-navy: #002238;
+            --fede-deep: #001220;
             --whatsapp-green: #25D366;
-            --whatsapp-green-hover: #1EBE5D;
-            --bg-light: #F1F5F9;
+            --whatsapp-hover: #1EBE5D;
+            --bg-dark: #070D14;
+            --card-bg: #0F172A;
             --white: #FFFFFF;
-            --text-dark: #0F172A;
-            --text-muted: #475569;
+            --text-muted: #94A3B8;
+            --accent-glow: rgba(59, 114, 185, 0.25);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background-color: var(--bg-dark);
+            color: var(--white);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* HEADER & LOGOS */
+        /* Top Header Glow Bar */
+        .top-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--ccl-blue), var(--ccl-orange));
+            box-shadow: 0 0 12px var(--ccl-orange);
+        }
+
+        /* Centered Header with Larger Logos */
         header {
-            background-color: var(--white);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding: 2.5rem 1.5rem;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
         }
 
-        .header-container {
-            max-width: 1200px;
+        .logo-container {
+            max-width: 1100px;
             margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .logo-box {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,465 +59,374 @@
             flex-wrap: wrap;
         }
 
+        .logo-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .logo-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(232, 131, 58, 0.4);
+        }
+
         .logo-box img {
-            max-height: 85px;
+            max-height: 95px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
-        .logo-box img:hover {
-            transform: translateY(-2px);
-        }
-
-        .divider-vertical {
-            width: 2px;
-            height: 60px;
-            background: linear-gradient(180deg, transparent, #CBD5E1, transparent);
-        }
-
-        /* HERO SECTION */
+        /* Hero Section Dinámico */
         .hero {
-            background: radial-gradient(circle at 80% 20%, #004B78 0%, var(--fede-navy) 50%, var(--fede-navy-dark) 100%);
-            color: var(--white);
-            padding: 5rem 1.5rem 6rem;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+            background: radial-gradient(circle at 50% 20%, #0A2540 0%, var(--bg-dark) 70%);
+            padding: 5rem 1.5rem 4rem 1.5rem;
+            text-align: center;
+            overflow: hidden;
         }
 
         .hero::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(232, 131, 58, 0.15), transparent 40%),
-                        radial-gradient(circle at 80% 20%, rgba(59, 114, 185, 0.2), transparent 40%);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .hero-container {
             max-width: 950px;
             margin: 0 auto;
-            text-align: center;
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
-        .tagline-badge {
+        .tagline {
             display: inline-block;
-            background: rgba(232, 131, 58, 0.15);
-            border: 1px solid rgba(232, 131, 58, 0.4);
             color: var(--ccl-orange);
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             font-size: 0.85rem;
-            padding: 0.5rem 1.25rem;
+            background: rgba(232, 131, 58, 0.1);
+            border: 1px solid rgba(232, 131, 58, 0.3);
+            padding: 0.4rem 1.2rem;
             border-radius: 50px;
             margin-bottom: 1.5rem;
-            backdrop-filter: blur(4px);
         }
 
         h1 {
             font-size: 3rem;
             line-height: 1.15;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
+            margin-bottom: 2rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, #FFFFFF 0%, #CBD5E1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* Event Meta Cards Grid */
         .event-meta {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            max-width: 900px;
+            margin: 2.5rem auto 0 auto;
         }
 
-        .meta-card {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
+        .meta-item {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.2rem 1rem;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--ccl-blue);
+            transition: border-color 0.3s ease;
+        }
+
+        .meta-item:hover {
+            border-left-color: var(--ccl-orange);
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-item span {
             font-size: 1.1rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, background 0.3s ease;
+            font-weight: 700;
+            color: var(--white);
         }
 
-        .meta-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .meta-icon {
-            color: var(--ccl-orange);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        /* MAIN CONTENT STRUCTURE */
+        /* Main Content Grid */
         main {
-            max-width: 1150px;
-            margin: -2rem auto 4rem;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
         }
 
-        .grid-layout {
+        .grid-2 {
             display: grid;
             grid-template-columns: 1.8fr 1.2fr;
             gap: 2.5rem;
-            align-items: start;
         }
 
-        /* CARDS */
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2.2rem; }
+            .logo-container { gap: 1.5rem; }
+            .logo-box img { max-height: 70px; }
+        }
+
         .card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 16px;
             padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         .card::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 6px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--ccl-blue) 0%, var(--ccl-orange) 100%);
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--ccl-blue), transparent);
         }
 
         h2 {
-            color: var(--fede-navy);
-            font-size: 1.6rem;
-            margin-bottom: 1.25rem;
-            font-weight: 700;
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
 
-        p {
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 1.2rem;
+            background: var(--ccl-orange);
+            border-radius: 2px;
+        }
+
+        .card p {
             color: var(--text-muted);
             font-size: 1.05rem;
-            line-height: 1.7;
         }
 
-        /* POINTS / TOPICS */
-        .points-grid {
-            display: grid;
-            gap: 1.25rem;
-            margin-top: 1.5rem;
+        ul.points {
+            list-style: none;
+            margin-top: 1rem;
         }
 
-        .point-item {
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-            transition: border-color 0.2s ease, background 0.2s ease;
+        ul.points li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-muted);
         }
 
-        .point-item:hover {
-            border-color: var(--ccl-blue);
-            background: #FFFFFF;
-        }
-
-        .point-badge {
-            background: var(--ccl-blue);
+        ul.points li strong {
             color: var(--white);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-            margin-top: 2px;
         }
 
-        .point-content strong {
-            color: var(--text-dark);
-            display: block;
-            margin-bottom: 0.25rem;
-            font-size: 1.05rem;
+        ul.points li::before {
+            content: "→";
+            color: var(--ccl-orange);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+            top: 2px;
         }
 
-        .point-content p {
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* SIDEBAR / CTA BOX */
-        .cta-card {
-            background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
-            border-radius: 20px;
+        /* Sticky Sidebar & CTA */
+        .cta-box {
+            background: linear-gradient(180deg, #131E32 0%, var(--card-bg) 100%);
+            border: 1px solid rgba(232, 131, 58, 0.3);
+            border-radius: 16px;
             padding: 2.5rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border: 2px solid rgba(232, 131, 58, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
             position: sticky;
             top: 2rem;
         }
 
-        .cta-card h3 {
-            color: var(--fede-navy);
-            font-size: 1.6rem;
-            font-weight: 800;
+        .cta-box h3 {
+            font-size: 1.4rem;
+            color: var(--white);
             margin-bottom: 0.5rem;
         }
 
-        /* BUTTONS */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
             width: 100%;
-            padding: 1.1rem 1.5rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.05rem;
+            padding: 1.1rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--ccl-orange) 0%, #D6722B 100%);
+            background: linear-gradient(135deg, var(--ccl-orange) 0%, #C86923 100%);
             color: var(--white);
-            margin: 1.75rem 0 1.25rem 0;
+            margin: 1.5rem 0 1rem 0;
             border: none;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(232, 131, 58, 0.35);
+            box-shadow: 0 8px 25px rgba(232, 131, 58, 0.4);
         }
 
         .btn-whatsapp {
-            background: linear-gradient(135deg, var(--whatsapp-green) 0%, var(--whatsapp-green-hover) 100%);
+            background-color: var(--whatsapp-green);
             color: var(--white);
-            border: none;
+            margin-top: 0.75rem;
         }
 
         .btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
         }
 
-        .btn-icon {
+        .btn-whatsapp svg {
             width: 22px;
             height: 22px;
             fill: currentColor;
         }
 
         .contact-divider {
-            margin: 1.5rem 0;
-            position: relative;
-            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
         }
 
-        .contact-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #E2E8F0;
-        }
-
-        .contact-divider span {
-            background: #F8FAFC;
-            padding: 0 0.75rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* FOOTER */
         footer {
-            background-color: var(--fede-navy-dark);
-            color: rgba(255, 255, 255, 0.7);
+            background-color: #030712;
+            color: var(--text-muted);
             text-align: center;
             padding: 2.5rem 1.5rem;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* RESPONSIVE DESIGN */
-        @media (max-width: 900px) {
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-card {
-                position: static;
-            }
-
-            h1 {
-                font-size: 2.2rem;
-            }
-
-            .logo-box {
-                gap: 2rem;
-            }
-
-            .logo-box img {
-                max-height: 65px;
-            }
-
-            .divider-vertical {
-                display: none;
-            }
+            margin-top: 5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER / LOGOS CENTRADOS -->
+    <div class="top-bar"></div>
+
     <header>
-        <div class="header-container">
+        <div class="logo-container">
             <div class="logo-box">
                 <img src="logo-ccl.png" alt="Cámara de Comercio Lechería">
-                <div class="divider-vertical"></div>
+            </div>
+            <div class="logo-box">
                 <img src="logo-fedecamaras.png" alt="Fedecámaras Anzoátegui">
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION DINÁMICO -->
     <section class="hero">
         <div class="hero-container">
-            <span class="tagline-badge">Encuentro Empresarial y Corporativo</span>
+            <span class="tagline">Encuentro Empresarial de Alto Nivel</span>
             <h1>Ruta del Éxito Comercial:<br>Protección Legal y Estándares de Excelencia</h1>
             
             <div class="event-meta">
-                <div class="meta-card">
-                    <span class="meta-icon">📅</span>
-                    <div>
-                        <strong style="display:block; font-size:0.8rem; text-transform:uppercase; opacity:0.8;">Fecha</strong>
-                        <span>10 de Septiembre, 2026</span>
-                    </div>
+                <div class="meta-item">
+                    <label>Fecha</label>
+                    <span>10 de Septiembre, 2026</span>
                 </div>
-                <div class="meta-card">
-                    <span class="meta-icon">⏰</span>
-                    <div>
-                        <strong style="display:block; font-size:0.8rem; text-transform:uppercase; opacity:0.8;">Hora</strong>
-                        <span>9:00 AM</span>
-                    </div>
+                <div class="meta-item">
+                    <label>Hora</label>
+                    <span>9:00 AM</span>
+                </div>
+                <div class="meta-item">
+                    <label>Ubicación</label>
+                    <span>Seguros Caracas, Lechería</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- MAIN CONTENT -->
     <main>
-        <div class="grid-layout">
-            <!-- COLUMNA PRINCIPAL -->
+        <div class="grid-2">
             <div class="content-col">
                 <div class="card">
-                    <h2>
-                        <span style="color: var(--ccl-orange);">●</span> Sobre el Evento
-                    </h2>
-                    <p>Un espacio exclusivo diseñado para dotar a empresarios, comerciantes y líderes de negocio de las herramientas críticas en materia de marco regulatorio legal y metodologías de gestión operativa. El objetivo es blindar sus operaciones comerciales y elevar los estándares directivos hacia un nivel superior de competitividad.</p>
+                    <h2>Sobre el Evento</h2>
+                    <p>Un encuentro estratégico diseñado para dotar a directores, comerciantes y líderes corporativos de las herramientas normativas y operativas necesarias para garantizar la sostenibilidad del negocio. Conoce cómo mitigar contingencias legales y estructurar procesos orientados a estándares internacionales de calidad.</p>
                 </div>
 
                 <div class="card">
-                    <h2>
-                        <span style="color: var(--ccl-orange);">●</span> Ejes Temáticos
-                    </h2>
-                    
-                    <div class="points-grid">
-                        <div class="point-item">
-                            <div class="point-badge">1</div>
-                            <div class="point-content">
-                                <strong>Blindaje Legal Comercial</strong>
-                                <p>Mitigación de riesgos operativos, cumplimiento normativo y estructuración de contratos de alto valor adaptados a la realidad actual.</p>
-                            </div>
-                        </div>
-
-                        <div class="point-item">
-                            <div class="point-badge">2</div>
-                            <div class="point-content">
-                                <strong>Estándares de Excelencia</strong>
-                                <p>Modelos de gestión eficiente, optimización de procesos interdepartamentales y control de calidad operativa sostenida.</p>
-                            </div>
-                        </div>
-
-                        <div class="point-item">
-                            <div class="point-badge">3</div>
-                            <div class="point-content">
-                                <strong>Estrategia de Crecimiento Sostenible</strong>
-                                <p>Claves corporativas para consolidar marcas, escalar operaciones y generar ventajas competitivas en mercados complejos.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <h2>Ejes Temáticos</h2>
+                    <ul class="points">
+                        <li><strong>Blindaje y Cumplimiento Legal:</strong> Prevención de riesgos operativos, adecuación a la normativa vigente y estructura de contratos de alta responsabilidad.</li>
+                        <li><strong>Estándares de Excelencia Operativa:</strong> Implementación de sistemas de control de calidad, optimización de flujos de trabajo e indicadores clave.</li>
+                        <li><strong>Estrategia Comercial Sostenible:</strong> Principios para escalar operaciones con seguridad jurídica y solidez institucional.</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- SIDEBAR / ACCIONES -->
             <div class="sidebar-col">
-                <div class="cta-card">
-                    <h3>Reserva tu Espacio</h3>
-                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 0.25rem;">Cupos limitados para representación empresarial.</p>
+                <div class="cta-box">
+                    <h3>Asegura tu Cupo</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">Capacidad limitada para representación ejecutiva.</p>
                     
                     <a href="https://forms.gle/eymSyB4tWD8rL38B8" target="_blank" class="btn btn-primary">
-                        <span>Confirmar Asistencia</span>
-                        <svg class="btn-icon" viewBox="0 0 24 24">
-                            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        Confirmar Asistencia
                     </a>
 
                     <div class="contact-divider">
-                        <span>Atención Directa</span>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">¿Requiere atención directa?</p>
+                        <a href="https://wa.me/+584224042020" target="_blank" class="btn btn-whatsapp">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                            </svg>
+                            Contacto WhatsApp
+                        </a>
                     </div>
-
-                    <a href="https://wa.me/+584224042020" target="_blank" class="btn btn-whatsapp">
-                        <svg class="btn-icon" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                        </svg>
-                        <span>Contactar por WhatsApp</span>
-                    </a>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer>
-        <p>© 2026 Ruta del Éxito Comercial. Evento organizado con el respaldo institucional de Fedecámaras Anzoátegui y la Cámara de Comercio Lechería.</p>
+        <p>© 2026 Ruta del Éxito Comercial. Evento patrocinado por la Cámara de Comercio Lechería y Fedecámaras Anzoátegui.</p>
     </footer>
 
 </body>
