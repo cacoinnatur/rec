@@ -33,14 +33,12 @@
             overflow-x: hidden;
         }
 
-        /* Top Header Glow Bar */
         .top-bar {
             height: 4px;
             background: linear-gradient(90deg, var(--ccl-blue), var(--ccl-orange));
             box-shadow: 0 0 12px var(--ccl-orange);
         }
 
-        /* Centered Header with Larger Logos */
         header {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
@@ -80,7 +78,6 @@
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
-        /* Hero Section Dinámico */
         .hero {
             position: relative;
             background: radial-gradient(circle at 50% 20%, #0A2540 0%, var(--bg-dark) 70%);
@@ -132,7 +129,6 @@
             text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Event Meta Cards Grid */
         .event-meta {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -172,7 +168,6 @@
             color: var(--white);
         }
 
-        /* Main Content Grid */
         main {
             max-width: 1100px;
             margin: 0 auto;
@@ -265,7 +260,32 @@
             top: 2px;
         }
 
-        /* Sticky Sidebar & CTA */
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .speaker-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.2rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--ccl-blue);
+        }
+
+        .speaker-card h4 {
+            color: var(--ccl-orange);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .speaker-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
         .cta-box {
             background: linear-gradient(180deg, #131E32 0%, var(--card-bg) 100%);
             border: 1px solid rgba(232, 131, 58, 0.3);
@@ -388,16 +408,30 @@
         <div class="grid-2">
             <div class="content-col">
                 <div class="card">
+                    <h2>Instituciones Ponentes</h2>
+                    <div class="speakers-grid">
+                        <div class="speaker-card">
+                            <h4>SAPI</h4>
+                            <p>Servicio Autónomo de la Propiedad Intelectual</p>
+                        </div>
+                        <div class="speaker-card">
+                            <h4>SENCAMER</h4>
+                            <p>Servicio Desconcentrado de Normalización, Calidad, Metrología y Reglamentos Técnicos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
                     <h2>Sobre el Evento</h2>
-                    <p>Un encuentro estratégico diseñado para dotar a directores, comerciantes y líderes corporativos de las herramientas normativas y operativas necesarias para garantizar la sostenibilidad del negocio. Conoce cómo mitigar contingencias legales y estructurar procesos orientados a estándares internacionales de calidad.</p>
+                    <p>Un encuentro estratégico diseñado para dotar a directores, comerciantes y líderes corporativos de las herramientas normativas y operativas necesarias para garantizar la sostenibilidad del negocio. Conoce directamente de los organismos reguladores los requerimientos para mitigar riesgos legales y escalar bajo estándares de calidad.</p>
                 </div>
 
                 <div class="card">
                     <h2>Ejes Temáticos</h2>
                     <ul class="points">
-                        <li><strong>Blindaje y Cumplimiento Legal:</strong> Prevención de riesgos operativos, adecuación a la normativa vigente y estructura de contratos de alta responsabilidad.</li>
-                        <li><strong>Estándares de Excelencia Operativa:</strong> Implementación de sistemas de control de calidad, optimización de flujos de trabajo e indicadores clave.</li>
-                        <li><strong>Estrategia Comercial Sostenible:</strong> Principios para escalar operaciones con seguridad jurídica y solidez institucional.</li>
+                        <li><strong>Propiedad Intelectual y Marcas (SAPI):</strong> Registro de marcas, patentes, derecho de autor y protección de activos intangibles del comercio.</li>
+                        <li><strong>Calidad y Normalización (SENCAMER):</strong> Reglamentos técnicos, metrología legal, certificación de productos y cumplimiento de normas de calidad.</li>
+                        <li><strong>Estrategia Comercial Sostenible:</strong> Claves para consolidar operaciones bajo un marco regulatorio sólido y sin contingencias.</li>
                     </ul>
                 </div>
             </div>
@@ -426,7 +460,7 @@
     </main>
 
     <footer>
-        <p>© 2026 Ruta del Éxito Comercial. Evento patrocinado por la Cámara de Comercio Lechería y Fedecámaras Anzoátegui.</p>
+        <p>© 2026 Ruta del Éxito Comercial. Evento organizado con el respaldo de la Cámara de Comercio Lechería y Fedecámaras Anzoátegui.</p>
     </footer>
 
 </body>
