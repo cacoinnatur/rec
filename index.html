@@ -1,64 +1,138 @@
 from pathlib import Path
-import base64
-from PIL import Image
-
-html_path = Path("/mnt/data/ruta_exito_comercial_v2.html")
-fed_src = Path("/mnt/data/logo-fedecamaras(1).png")
-ccl_src = Path("/mnt/data/CCL(1).jpg")
-
-# El archivo de Fedecámaras tiene extensión .png, pero internamente es JPEG.
-# Lo convertimos a PNG real para evitar problemas de compatibilidad en navegadores/GitHub Pages.
-fed_png = Path("/mnt/data/logo-fedecamaras-real.png")
-Image.open(fed_src).convert("RGBA").save(fed_png, "PNG")
-
-def data_uri(path, mime):
-    return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode("ascii")
-
-fed_uri = data_uri(fed_png, "image/png")
-ccl_uri = data_uri(ccl_src, "image/jpeg")
-
-html = html_path.read_text(encoding="utf-8")
-
-# Reemplaza cualquier URI anterior de los logos, manteniendo el HTML autónomo.
 import re
-html = re.sub(r'data:image/(?:png|jpeg);base64,[A-Za-z0-9+/=]+', lambda m: fed_uri if 'logo-fed' in html[max(0,m.start()-150):m.start()] else m.group(0), html)
 
-# Para hacerlo inequívoco, reconstruimos los src de los logos según sus alt.
-html = re.sub(
-    r'(<img[^>]+alt="Fedecámaras Anzoátegui"[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+(")',
-    r'\1' + fed_uri + r'\2',
-    html
+src = Path("/mnt/data/ruta_exito_comercial_v2.html")
+out = Path("/mnt/data/ruta_exito_comercial_v4_temas_ponentes.html")
+
+html = src.read_text(encoding="utf-8")
+
+# Reemplazar la sección de agenda por una versión más completa con ponentes y temas.
+new_agenda = r'''
+<section class="route" id="agenda">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Ponencias & orientación técnica</span>
+      <h2>Dos instituciones.<br>Dos herramientas para hacer crecer tu negocio.</h2>
+      <p>Conoce de primera mano los procedimientos, servicios y herramientas que puedes utilizar para proteger tus creaciones, formalizar tu actividad y elevar la calidad de tus productos.</p>
+    </div>
+
+    <div class="speaker-grid">
+      <article class="speaker-card reveal">
+        <div class="speaker-top">
+          <div class="speaker-number">01</div>
+          <div class="speaker-label">Propiedad Intelectual</div>
+        </div>
+        <div class="speaker-org">SAPI · Anzoátegui</div>
+        <h3>Conversatorio: Propiedad Intelectual y funciones del SAPI</h3>
+        <p class="speaker-intro">Orientación práctica para aprender a proteger legalmente las creaciones, marcas e innovaciones de comerciantes, emprendedores, artesanos, estudiantes, PYMES y cultores.</p>
+
+        <div class="topic-title">Temas que se abordarán</div>
+        <div class="topic-list">
+          <div><span>✓</span><b>Registro de Marcas</b><small>Proceso, importancia y protección de la identidad comercial.</small></div>
+          <div><span>✓</span><b>Patentes</b><small>Protección de innovaciones y creaciones susceptibles de registro.</small></div>
+          <div><span>✓</span><b>Derecho de Autor</b><small>Herramientas para resguardar obras y creaciones.</small></div>
+          <div><span>✓</span><b>Sistema Webpi</b><small>Orientación práctica sobre el funcionamiento de la plataforma digital.</small></div>
+          <div><span>✓</span><b>Identidad cultural</b><small>Protección de creaciones nacionales, conocimientos tradicionales e indicaciones geográficas protegidas.</small></div>
+          <div><span>✓</span><b>Economía comunal y emprendimiento</b><small>Cómo la propiedad intelectual puede fortalecer pequeños negocios e iniciativas innovadoras.</small></div>
+        </div>
+
+        <div class="speaker-footer">
+          <div class="speaker-person">
+            <div class="avatar">DS</div>
+            <div><small>Ponente</small><strong>Dumary Semerene</strong><span>Coordinación Estadal de SAPI en Anzoátegui</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="speaker-card speaker-card-alt reveal">
+        <div class="speaker-top">
+          <div class="speaker-number">02</div>
+          <div class="speaker-label">Sistema Venezolano para la Calidad</div>
+        </div>
+        <div class="speaker-org">SENCAMER · Anzoátegui</div>
+        <h3>Jornada de orientación sobre la Ley del Sistema Venezolano para la Calidad</h3>
+        <p class="speaker-intro">Una visión integral de los servicios y procesos que forman parte del Sistema Venezolano para la Calidad y su aplicación para empresas y productos.</p>
+
+        <div class="topic-title">Temas que se abordarán</div>
+        <div class="topic-list">
+          <div><span>✓</span><b>Normalización</b><small>Normas y criterios técnicos que contribuyen a la calidad.</small></div>
+          <div><span>✓</span><b>Metrología</b><small>Importancia de las mediciones confiables en las actividades comerciales.</small></div>
+          <div><span>✓</span><b>Acreditación</b><small>Conceptos y función dentro del sistema nacional de calidad.</small></div>
+          <div><span>✓</span><b>Certificación</b><small>Qué significa certificar y cómo se relaciona con la calidad del producto.</small></div>
+          <div><span>✓</span><b>Reglamentos Técnicos</b><small>Requisitos técnicos aplicables según el tipo de producto o actividad.</small></div>
+          <div><span>✓</span><b>Ensayos</b><small>El papel de las pruebas y evaluaciones en la demostración de conformidad.</small></div>
+        </div>
+
+        <div class="speaker-footer">
+          <div class="speaker-person">
+            <div class="avatar">SE</div>
+            <div><small>Ponente</small><strong>SENCAMER Anzoátegui</strong><span>Equipo técnico de orientación</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="benefit-strip reveal">
+      <div><strong>¿Qué te llevas?</strong><span>Claridad sobre los procesos</span><span>Herramientas prácticas</span><span>Orientación institucional</span><span>Mejores decisiones para tu negocio</span></div>
+    </div>
+  </div>
+</section>
+'''
+
+# Add styles before the existing @media section.
+extra_css = r'''
+.speaker-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;position:relative;z-index:2}
+.speaker-card{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.13);border-radius:28px;padding:30px;box-shadow:0 22px 55px rgba(0,0,0,.13);backdrop-filter:blur(8px);transition:.3s;overflow:hidden}
+.speaker-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.25)}
+.speaker-card-alt{background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(23,169,216,.07))}
+.speaker-top{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.speaker-number{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:rgba(242,139,45,.16);color:#ffad52;font-weight:900}
+.speaker-label{font-size:10px;text-transform:uppercase;letter-spacing:.11em;color:#a9c6d0;font-weight:900;text-align:right}
+.speaker-org{margin-top:27px;color:#62c9e9;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:900}
+.speaker-card h3{font-size:27px;line-height:1.08;margin:9px 0 13px;color:#fff;letter-spacing:-.025em}
+.speaker-intro{font-size:14px;line-height:1.65;color:#b6ccd4;margin:0 0 23px}
+.topic-title{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:#ffad52;margin-bottom:10px}
+.topic-list{display:grid;gap:9px}
+.topic-list>div{display:grid;grid-template-columns:24px 1fr;column-gap:8px;align-items:start;padding:10px 0;border-top:1px solid rgba(255,255,255,.08)}
+.topic-list span{grid-row:span 2;width:21px;height:21px;display:grid;place-items:center;border-radius:50%;background:rgba(23,169,216,.15);color:#64cae9;font-size:12px;font-weight:900}
+.topic-list b{font-size:13px;color:#f4fafc}.topic-list small{font-size:11px;line-height:1.45;color:#91abb6;margin-top:2px}
+.speaker-footer{margin-top:23px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}
+.speaker-person{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#0b84b8,#f28b2d);color:#fff;font-size:11px;font-weight:900}
+.speaker-person small,.speaker-person span{display:block;color:#8faab5;font-size:10px}
+.speaker-person strong{display:block;color:#fff;font-size:13px;margin:2px 0}
+.benefit-strip{margin-top:25px;padding:18px 21px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.04);position:relative;z-index:2}
+.benefit-strip>div{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.benefit-strip strong{color:#fff;margin-right:8px}.benefit-strip span{font-size:11px;color:#b5ccd4;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06)}
+@media(max-width:980px){.speaker-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.speaker-card{padding:24px}.speaker-card h3{font-size:23px}.speaker-label{font-size:9px}.benefit-strip>div{align-items:flex-start}.benefit-strip strong{width:100%}}
+'''
+
+# Replace the old agenda block from <section class="route" id="agenda"> through its closing section.
+pattern = re.compile(r'<section class="route" id="agenda">.*?</section>\s*<section class="details"', re.S)
+if not pattern.search(html):
+    raise RuntimeError("No se encontró la sección de agenda para actualizar.")
+html = pattern.sub(new_agenda + "\n<section class=\"details\"", html, count=1)
+
+# Insert the new CSS immediately before the first @media block.
+html = html.replace('@media(max-width:980px){', extra_css + '\n@media(max-width:980px){', 1)
+
+# Update the hero copy to advertise the two technical sessions.
+html = html.replace(
+    'Una jornada práctica para comerciantes, emprendedores y PYMES que quieren dar el siguiente paso: <b>registrar, proteger y certificar</b> lo que hace valiosa a su empresa.',
+    'Una jornada práctica con especialistas de <b>SAPI y SENCAMER</b> para conocer cómo proteger tu marca, tus creaciones y cumplir con los criterios de calidad que fortalecen tus productos.'
 )
-html = re.sub(
-    r'(<img[^>]+alt="Cámara de Comercio Lechería"[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+(")',
-    r'\1' + ccl_uri + r'\2',
-    html
+
+# Update the route intro.
+html = html.replace(
+    'Del registro de tu marca a la certificación de tu producto. Conoce las instituciones que pueden acompañarte en cada etapa formal del comercio.',
+    'Desde la propiedad intelectual hasta la calidad de tus productos: conoce los procedimientos, servicios y herramientas que SAPI y SENCAMER ponen a disposición del empresariado.'
 )
 
-# También corrige el orden si el src aparece antes del alt.
-html = re.sub(
-    r'(<img[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+("[^>]+alt="Fedecámaras Anzoátegui")',
-    r'\1' + fed_uri + r'\2',
-    html
-)
-html = re.sub(
-    r'(<img[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+("[^>]+alt="Cámara de Comercio Lechería")',
-    r'\1' + ccl_uri + r'\2',
-    html
-)
+# Make the agenda nav label more descriptive.
+html = html.replace('<a href="#agenda">Agenda</a>', '<a href="#agenda">Ponencias</a>')
 
-# Si el reemplazo anterior no encontró los tags por formato, genera una versión
-# robusta sustituyendo las URIs por posición: Fedecámaras primero, CCL segundo.
-matches = list(re.finditer(r'data:image/(?:png|jpeg);base64,[A-Za-z0-9+/=]+', html))
-if len(matches) >= 2:
-    # Los primeros usos corresponden a Fedecámaras y CCL.
-    replacements = {matches[0].span(): fed_uri, matches[1].span(): ccl_uri}
-    for span, uri in sorted(replacements.items(), reverse=True):
-        html = html[:span[0]] + uri + html[span[1]:]
-
-fixed = Path("/mnt/data/ruta_exito_comercial_v3_imagenes.html")
-fixed.write_text(html, encoding="utf-8")
-
-print(f"Versión corregida: {fixed}")
-print(f"Tamaño: {fixed.stat().st_size/1024:.1f} KB")
-print("Fedecámaras convertido a PNG real y ambos logos incrustados en el HTML.")
+out.write_text(html, encoding="utf-8")
+print(f"Versión actualizada creada: {out}")
+print(f"Tamaño: {out.stat().st_size/1024:.1f} KB")
+print("Incluye: ponencia SAPI + 6 temas, ponencia SENCAMER + 6 temas, ponentes, beneficios y nuevo bloque visual.")
