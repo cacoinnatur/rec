@@ -1,338 +1,64 @@
 from pathlib import Path
 import base64
 from PIL import Image
-from io import BytesIO
 
-fed_path = Path("/mnt/data/logo-fedecamaras(1).png")
-ccl_path = Path("/mnt/data/CCL(1).jpg")
+html_path = Path("/mnt/data/ruta_exito_comercial_v2.html")
+fed_src = Path("/mnt/data/logo-fedecamaras(1).png")
+ccl_src = Path("/mnt/data/CCL(1).jpg")
 
-def data_uri(path):
-    mime = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
-    return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
+# El archivo de Fedecámaras tiene extensión .png, pero internamente es JPEG.
+# Lo convertimos a PNG real para evitar problemas de compatibilidad en navegadores/GitHub Pages.
+fed_png = Path("/mnt/data/logo-fedecamaras-real.png")
+Image.open(fed_src).convert("RGBA").save(fed_png, "PNG")
 
-fed_logo = data_uri(fed_path)
-ccl_logo = data_uri(ccl_path)
+def data_uri(path, mime):
+    return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode("ascii")
 
-html = r"""<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#063d55">
-<title>Ruta del Éxito Comercial | CCL + Fedecámaras Anzoátegui</title>
-<style>
-:root{
-  --navy:#063d55;
-  --navy2:#082f43;
-  --blue:#087db8;
-  --cyan:#17a9d8;
-  --orange:#f28b2d;
-  --cream:#f6f8f9;
-  --white:#fff;
-  --ink:#123142;
-  --muted:#667b87;
-  --line:rgba(6,61,85,.12);
-  --shadow:0 24px 70px rgba(5,40,55,.14);
-  --radius:26px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color:var(--ink);background:var(--cream);overflow-x:hidden;
-}
-a{text-decoration:none;color:inherit}
-button{font:inherit}
-.container{width:min(1160px,calc(100% - 40px));margin:auto}
-.noise{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:20;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")}
-.topbar{background:#052f42;color:#dcebf1;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
-.topbar .container{height:42px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.topbar b{color:#fff}
-header{
-  position:fixed;top:42px;left:0;right:0;z-index:30;
-  transition:.35s;background:rgba(6,61,85,.18);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.08)
-}
-header.scrolled{background:rgba(6,61,85,.94);box-shadow:0 10px 30px rgba(0,0,0,.14)}
-.nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{display:flex;align-items:center;gap:13px;color:#fff}
-.brand img{width:142px;height:auto;display:block}
-.brand .divider{height:34px;width:1px;background:rgba(255,255,255,.35)}
-.brand span{font-size:11px;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;max-width:150px}
-.navlinks{display:flex;align-items:center;gap:25px;color:#eaf5f8;font-size:13px;font-weight:700}
-.navlinks a{opacity:.88}.navlinks a:hover{opacity:1}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;font-weight:800;border-radius:999px;padding:15px 22px;transition:.25s;white-space:nowrap}
-.btn-primary{background:linear-gradient(135deg,var(--orange),#ffad52);color:#fff;box-shadow:0 12px 28px rgba(242,139,45,.28)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(242,139,45,.34)}
-.btn-light{background:#fff;color:var(--navy);box-shadow:0 12px 28px rgba(0,0,0,.12)}
-.btn-ghost{border:1px solid rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.05)}
+fed_uri = data_uri(fed_png, "image/png")
+ccl_uri = data_uri(ccl_src, "image/jpeg")
 
-.hero{
-  min-height:790px;position:relative;display:flex;align-items:center;color:#fff;overflow:hidden;
-  background:
-    radial-gradient(circle at 78% 25%,rgba(23,169,216,.34),transparent 27%),
-    radial-gradient(circle at 15% 75%,rgba(242,139,45,.18),transparent 24%),
-    linear-gradient(125deg,#052f42 0%,#063d55 53%,#07516d 100%);
-}
-.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}
-.hero:before{width:500px;height:500px;border:1px solid rgba(255,255,255,.08);right:-160px;bottom:-220px;box-shadow:0 0 0 70px rgba(255,255,255,.018),0 0 0 140px rgba(255,255,255,.014)}
-.hero:after{width:310px;height:310px;border:1px solid rgba(255,255,255,.09);left:-180px;top:180px}
-.hero-grid{position:absolute;inset:0;opacity:.09;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(90deg,black,transparent 80%)}
-.hero .container{position:relative;z-index:2;padding-top:90px}
-.hero-copy{max-width:790px}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 13px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.eyebrow i{width:8px;height:8px;background:#f7a44c;border-radius:50%;box-shadow:0 0 0 6px rgba(247,164,76,.12)}
-h1{font-size:clamp(48px,7vw,92px);line-height:.94;letter-spacing:-.055em;margin:24px 0 22px;max-width:900px}
-h1 .accent{color:#ffad52}
-.hero p{font-size:clamp(17px,2vw,21px);line-height:1.6;color:#d8e9ef;max-width:700px;margin:0}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.meta-pill{display:flex;align-items:center;gap:10px;padding:12px 15px;background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.13);border-radius:15px;color:#eaf6fa;font-size:13px}
-.meta-pill strong{color:#fff}
-.logos{position:absolute;right:0;bottom:58px;display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:22px;background:rgba(255,255,255,.94);box-shadow:0 20px 55px rgba(0,0,0,.2)}
-.logos .fed{width:205px;height:auto}
-.logos .ccl{width:88px;height:88px;object-fit:cover;border-radius:10px}
-.countdown-wrap{position:absolute;right:0;top:155px;width:320px;padding:18px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.16);backdrop-filter:blur(16px);border-radius:24px;box-shadow:var(--shadow)}
-.count-title{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#b9d4df;font-weight:800}
-.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
-.count-box{background:rgba(255,255,255,.08);border-radius:13px;padding:12px 4px;text-align:center}
-.count-box b{display:block;font-size:27px;line-height:1}.count-box span{font-size:9px;color:#b9d4df;text-transform:uppercase;letter-spacing:.08em}
-section{padding:100px 0}
-.section-head{max-width:730px;margin-bottom:45px}
-.kicker{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
-h2{font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.045em;margin:12px 0 15px;color:var(--navy)}
-.section-head p{color:var(--muted);font-size:17px;line-height:1.7;margin:0}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:32px;box-shadow:0 10px 35px rgba(7,51,67,.06);overflow:hidden;transition:.3s}
-.card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-.card:after{content:"";position:absolute;right:-60px;top:-60px;width:170px;height:170px;border-radius:50%;background:rgba(23,169,216,.08)}
-.stop{display:flex;align-items:center;justify-content:space-between;margin-bottom:45px}
-.number{width:50px;height:50px;display:grid;place-items:center;border-radius:15px;background:#eaf6fb;color:var(--blue);font-weight:900}
-.badge{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
-.card h3{font-size:31px;margin:0 0 10px;color:var(--navy)}
-.card p{color:var(--muted);line-height:1.7;margin:0 0 22px}
-.tags{display:flex;flex-wrap:wrap;gap:8px}.tag{padding:8px 11px;border-radius:999px;background:#f2f7f9;font-size:11px;font-weight:800;color:#4d6876}
-.route{background:var(--navy);color:#fff;position:relative;overflow:hidden}
-.route:before{content:"";position:absolute;inset:auto -10% -70% 20%;height:400px;background:radial-gradient(circle,rgba(23,169,216,.28),transparent 62%)}
-.route h2{color:#fff}.route .section-head p{color:#bdd3dc}
-.route-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;position:relative}
-.route-list{display:grid;gap:18px}
-.route-item{display:flex;gap:18px;align-items:flex-start;padding:20px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.04)}
-.route-item .icon{flex:0 0 42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.09);font-size:18px}
-.route-item h3{margin:0 0 5px;font-size:17px}.route-item p{margin:0;color:#a9c2cc;font-size:14px;line-height:1.55}
-.timeline{position:relative;padding-left:30px}
-.timeline:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(var(--orange),var(--cyan))}
-.tl{position:relative;margin-bottom:30px}.tl:last-child{margin-bottom:0}.tl:before{content:"";position:absolute;left:-28px;top:5px;width:12px;height:12px;border-radius:50%;background:#fff;border:4px solid var(--orange)}
-.tl small{color:#9fc1ce;text-transform:uppercase;letter-spacing:.12em;font-weight:800}.tl h3{margin:7px 0;font-size:22px}.tl p{margin:0;color:#aac3cd;line-height:1.55}
-.details{background:#fff}
-.detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
-.detail{padding:24px;border-radius:20px;background:#f4f8fa;border:1px solid var(--line)}
-.detail .ico{font-size:23px;margin-bottom:17px}.detail small{display:block;text-transform:uppercase;letter-spacing:.1em;color:#7a8d96;font-weight:800;font-size:10px}.detail strong{display:block;color:var(--navy);font-size:20px;margin-top:5px}
-.cta{padding:90px 0;background:linear-gradient(135deg,#f7fbfc,#eaf6fa)}
-.cta-box{position:relative;overflow:hidden;border-radius:34px;padding:55px;background:linear-gradient(120deg,var(--navy),#075a79);color:#fff;box-shadow:var(--shadow)}
-.cta-box:after{content:"";position:absolute;right:-110px;top:-160px;width:440px;height:440px;border-radius:50%;border:70px solid rgba(255,255,255,.05)}
-.cta-box h2{color:#fff;max-width:650px;margin-top:8px}.cta-box p{max-width:650px;color:#c5dce5;line-height:1.65}
-.cta-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
-footer{background:#042c3d;color:#9fb9c4;padding:35px 0}
-.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:25px}
-.footer-brand{display:flex;align-items:center;gap:15px}.footer-brand img{width:150px}.footer-ccl{width:54px;height:54px;object-fit:cover;border-radius:8px}
-.footer-copy{font-size:12px;line-height:1.6;text-align:right}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:none}
-.float-wa{position:fixed;right:20px;bottom:20px;z-index:25;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#25d366;color:#fff;font-size:25px;box-shadow:0 15px 35px rgba(0,0,0,.2);animation:pulse 2.3s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 15px 35px rgba(0,0,0,.2),0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 15px 35px rgba(0,0,0,.2),0 0 0 13px rgba(37,211,102,0)}}
-@media(max-width:980px){
-  .navlinks{display:none}.countdown-wrap{position:relative;right:auto;top:auto;margin-top:28px;width:min(100%,430px)}
-  .hero{min-height:930px}.logos{position:relative;right:auto;bottom:auto;margin-top:24px;width:max-content;max-width:100%}
-  .hero .container{padding-top:115px}.route-grid{grid-template-columns:1fr;gap:45px}.detail-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:700px){
-  .container{width:min(100% - 28px,1160px)}.topbar .container{height:auto;min-height:40px;padding:7px 0}.topbar span:last-child{display:none}
-  header{top:40px}.nav{height:68px}.brand img{width:118px}.brand .divider,.brand span{display:none}
-  .hero{min-height:980px}.hero .container{padding-top:105px}h1{font-size:51px}.hero p{font-size:16px}
-  .hero-actions .btn{width:100%}.meta-pill{width:100%}.logos{padding:10px;gap:8px}.logos .fed{width:160px}.logos .ccl{width:64px;height:64px}
-  section{padding:72px 0}.cards{grid-template-columns:1fr}.card{padding:25px}.detail-grid{grid-template-columns:1fr 1fr}.detail{padding:18px}
-  .cta-box{padding:35px 25px;border-radius:25px}.footer-grid{align-items:flex-start;flex-direction:column}.footer-copy{text-align:left}
-}
-@media(max-width:430px){.detail-grid{grid-template-columns:1fr}.countdown-wrap{width:100%}}
-</style>
-</head>
-<body>
-<div class="noise"></div>
+html = html_path.read_text(encoding="utf-8")
 
-<div class="topbar">
-  <div class="container">
-    <span><b>Evento empresarial · Anzoátegui</b></span>
-    <span>Jueves 10 de septiembre · 9:00 AM · Lechería</span>
-  </div>
-</div>
+# Reemplaza cualquier URI anterior de los logos, manteniendo el HTML autónomo.
+import re
+html = re.sub(r'data:image/(?:png|jpeg);base64,[A-Za-z0-9+/=]+', lambda m: fed_uri if 'logo-fed' in html[max(0,m.start()-150):m.start()] else m.group(0), html)
 
-<header id="header">
-  <div class="container nav">
-    <a class="brand" href="#inicio">
-      <img src="__FED_LOGO__" alt="Fedecámaras Anzoátegui">
-      <span class="divider"></span>
-      <span>Aliados por el<br>empresariado</span>
-    </a>
-    <nav class="navlinks">
-      <a href="#ruta">La ruta</a>
-      <a href="#agenda">Agenda</a>
-      <a href="#evento">Evento</a>
-      <a href="#reserva">Reserva</a>
-      <a class="btn btn-primary" href="https://forms.gle/eymSyB4tWD8rL38B8" target="_blank" rel="noopener">Reservar cupo →</a>
-    </nav>
-  </div>
-</header>
+# Para hacerlo inequívoco, reconstruimos los src de los logos según sus alt.
+html = re.sub(
+    r'(<img[^>]+alt="Fedecámaras Anzoátegui"[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+(")',
+    r'\1' + fed_uri + r'\2',
+    html
+)
+html = re.sub(
+    r'(<img[^>]+alt="Cámara de Comercio Lechería"[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+(")',
+    r'\1' + ccl_uri + r'\2',
+    html
+)
 
-<main>
-<section class="hero" id="inicio">
-  <div class="hero-grid"></div>
-  <div class="container">
-    <div class="hero-copy reveal">
-      <span class="eyebrow"><i></i> Ruta del Éxito Comercial</span>
-      <h1>Protege tu marca.<br><span class="accent">Eleva tu negocio.</span></h1>
-      <p>Una jornada práctica para comerciantes, emprendedores y PYMES que quieren dar el siguiente paso: <b>registrar, proteger y certificar</b> lo que hace valiosa a su empresa.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://forms.gle/eymSyB4tWD8rL38B8" target="_blank" rel="noopener">Quiero reservar mi cupo ↗</a>
-        <a class="btn btn-ghost" href="#ruta">Descubrir la ruta ↓</a>
-      </div>
-      <div class="hero-meta">
-        <div class="meta-pill">📅 <span><strong>10 SEP 2026</strong><br>Jueves</span></div>
-        <div class="meta-pill">🕘 <span><strong>9:00 AM</strong><br>Llegada recomendada 8:45</span></div>
-        <div class="meta-pill">📍 <span><strong>Seguros Caracas</strong><br>Salón de eventos · Lechería</span></div>
-      </div>
-    </div>
+# También corrige el orden si el src aparece antes del alt.
+html = re.sub(
+    r'(<img[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+("[^>]+alt="Fedecámaras Anzoátegui")',
+    r'\1' + fed_uri + r'\2',
+    html
+)
+html = re.sub(
+    r'(<img[^>]+src=")data:image/(?:png|jpeg);base64,[^"]+("[^>]+alt="Cámara de Comercio Lechería")',
+    r'\1' + ccl_uri + r'\2',
+    html
+)
 
-    <div class="countdown-wrap reveal">
-      <div class="count-title">El evento comienza en</div>
-      <div class="countdown">
-        <div class="count-box"><b id="days">00</b><span>Días</span></div>
-        <div class="count-box"><b id="hours">00</b><span>Horas</span></div>
-        <div class="count-box"><b id="mins">00</b><span>Min</span></div>
-        <div class="count-box"><b id="secs">00</b><span>Seg</span></div>
-      </div>
-    </div>
+# Si el reemplazo anterior no encontró los tags por formato, genera una versión
+# robusta sustituyendo las URIs por posición: Fedecámaras primero, CCL segundo.
+matches = list(re.finditer(r'data:image/(?:png|jpeg);base64,[A-Za-z0-9+/=]+', html))
+if len(matches) >= 2:
+    # Los primeros usos corresponden a Fedecámaras y CCL.
+    replacements = {matches[0].span(): fed_uri, matches[1].span(): ccl_uri}
+    for span, uri in sorted(replacements.items(), reverse=True):
+        html = html[:span[0]] + uri + html[span[1]:]
 
-    <div class="logos reveal">
-      <img class="fed" src="__FED_LOGO__" alt="Fedecámaras Anzoátegui">
-      <img class="ccl" src="__CCL_LOGO__" alt="Cámara de Comercio Lechería">
-    </div>
-  </div>
-</section>
+fixed = Path("/mnt/data/ruta_exito_comercial_v3_imagenes.html")
+fixed.write_text(html, encoding="utf-8")
 
-<section id="ruta">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="kicker">La ruta</span>
-      <h2>Dos paradas.<br>Una ventaja competitiva.</h2>
-      <p>Del registro de tu marca a la certificación de tu producto. Conoce las instituciones que pueden acompañarte en cada etapa formal del comercio.</p>
-    </div>
-    <div class="cards">
-      <article class="card reveal">
-        <div class="stop"><span class="number">01</span><span class="badge">Registro</span></div>
-        <h3>SAPI</h3>
-        <p><b>Servicio Autónomo de la Propiedad Intelectual.</b> Orientación sobre marcas, patentes, derecho de autor y protección de activos intangibles, incluyendo el sistema Webpi.</p>
-        <div class="tags"><span class="tag">Marcas</span><span class="tag">Patentes</span><span class="tag">Derecho de autor</span></div>
-      </article>
-      <article class="card reveal">
-        <div class="stop"><span class="number">02</span><span class="badge">Certificación</span></div>
-        <h3>SENCAMER</h3>
-        <p><b>Servicio Desconcentrado de Normalización, Calidad, Metrología y Reglamentos Técnicos.</b> Conoce el camino para cumplir las normas de calidad y certificar tus productos.</p>
-        <div class="tags"><span class="tag">Normalización</span><span class="tag">Metrología</span><span class="tag">Certificación</span></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="route" id="agenda">
-  <div class="container route-grid">
-    <div>
-      <div class="section-head reveal">
-        <span class="kicker">Agenda</span>
-        <h2>Una mañana para salir con claridad.</h2>
-        <p>Información concreta, orientación técnica y una visión más segura para formalizar y hacer crecer tu negocio.</p>
-      </div>
-      <div class="route-list">
-        <div class="route-item reveal"><div class="icon">01</div><div><h3>Registro y protección</h3><p>Entiende qué proteger, por qué hacerlo y cuáles son las vías de registro.</p></div></div>
-        <div class="route-item reveal"><div class="icon">02</div><div><h3>Calidad y certificación</h3><p>Conoce las normas, procesos y conceptos esenciales para tus productos.</p></div></div>
-        <div class="route-item reveal"><div class="icon">03</div><div><h3>Preguntas para tu negocio</h3><p>Llega con tus dudas y aprovecha la jornada para convertir información en decisiones.</p></div></div>
-      </div>
-    </div>
-    <div class="timeline reveal">
-      <div class="tl"><small>08:45 AM</small><h3>Recepción</h3><p>Llegada y registro de participantes.</p></div>
-      <div class="tl"><small>09:00 AM</small><h3>Inicio de la jornada</h3><p>Bienvenida y apertura de la Ruta del Éxito Comercial.</p></div>
-      <div class="tl"><small>09:15 AM</small><h3>Parada 01 · SAPI</h3><p>Registro y protección de la propiedad intelectual.</p></div>
-      <div class="tl"><small>10:30 AM</small><h3>Parada 02 · SENCAMER</h3><p>Normalización, calidad, metrología y certificación.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="details" id="evento">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="kicker">Todo lo que necesitas saber</span>
-      <h2>Guarda estos cuatro datos.</h2>
-    </div>
-    <div class="detail-grid">
-      <div class="detail reveal"><div class="ico">📅</div><small>Fecha</small><strong>10 Sep 2026</strong><span>Jueves</span></div>
-      <div class="detail reveal"><div class="ico">⏰</div><small>Hora</small><strong>9:00 AM</strong><span>Jornada matutina</span></div>
-      <div class="detail reveal"><div class="ico">📍</div><small>Lugar</small><strong>Seguros Caracas</strong><span>Salón de eventos · Lechería</span></div>
-      <div class="detail reveal"><div class="ico">🎟️</div><small>Acceso</small><strong>Cupo limitado</strong><span>Reserva previa requerida</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="cta" id="reserva">
-  <div class="container">
-    <div class="cta-box reveal">
-      <span class="kicker">Cupos limitados</span>
-      <h2>Tu negocio merece estar protegido.</h2>
-      <p>Reserva tu lugar en la Ruta del Éxito Comercial y prepárate para tomar decisiones con mejor información sobre tu marca y tus productos.</p>
-      <div class="cta-actions">
-        <a class="btn btn-primary" href="https://forms.gle/eymSyB4tWD8rL38B8" target="_blank" rel="noopener">Reservar mi cupo ↗</a>
-        <a class="btn btn-light" href="https://wa.me/584224042020?text=Hola%2C%20quiero%20reservar%20mi%20cupo%20para%20la%20Ruta%20del%20%C3%89xito%20Comercial." target="_blank" rel="noopener">Escribir por WhatsApp</a>
-      </div>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="__FED_LOGO__" alt="Fedecámaras Anzoátegui">
-      <img class="footer-ccl" src="__CCL_LOGO__" alt="Cámara de Comercio Lechería">
-    </div>
-    <div class="footer-copy">Cámara de Comercio Lechería · Fedecámaras Anzoátegui<br>Ruta del Éxito Comercial · 10 de septiembre de 2026</div>
-  </div>
-</footer>
-
-<a class="float-wa" href="https://wa.me/584224042020?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20Ruta%20del%20%C3%89xito%20Comercial." target="_blank" rel="noopener" aria-label="WhatsApp">◔</a>
-
-<script>
-const eventDate = new Date("2026-09-10T09:00:00-04:00").getTime();
-function tick(){
-  const diff = Math.max(0,eventDate-Date.now());
-  const d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000), m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
-  document.getElementById("days").textContent=String(d).padStart(2,"0");
-  document.getElementById("hours").textContent=String(h).padStart(2,"0");
-  document.getElementById("mins").textContent=String(m).padStart(2,"0");
-  document.getElementById("secs").textContent=String(s).padStart(2,"0");
-}
-tick(); setInterval(tick,1000);
-
-const header=document.getElementById("header");
-window.addEventListener("scroll",()=>header.classList.toggle("scrolled",scrollY>30));
-
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")})
-},{threshold:.12});
-document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
-</script>
-</body>
-</html>"""
-
-html = html.replace("__FED_LOGO__", fed_logo).replace("__CCL_LOGO__", ccl_logo)
-out = Path("/mnt/data/ruta_exito_comercial_v2.html")
-out.write_text(html, encoding="utf-8")
-print(f"HTML creado: {out}")
-print(f"Tamaño: {out.stat().st_size/1024:.1f} KB")
+print(f"Versión corregida: {fixed}")
+print(f"Tamaño: {fixed.stat().st_size/1024:.1f} KB")
+print("Fedecámaras convertido a PNG real y ambos logos incrustados en el HTML.")
