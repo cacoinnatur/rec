@@ -107,15 +107,22 @@
             flex-wrap: wrap;
         }
 
-        .logos-header img {
-            height: 80px;
-            width: auto;
-            filter: brightness(0) invert(1);
+        .logo-container {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s ease;
         }
 
-        .logos-header img:hover {
-            transform: scale(1.1);
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            display: block;
         }
 
         .hero h1 {
@@ -433,11 +440,17 @@
             flex-wrap: wrap;
         }
 
-        .footer-logos img {
+        .footer-logo-container {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .footer-logo-container img {
             height: 60px;
             width: auto;
-            filter: brightness(0) invert(1);
-            opacity: 0.8;
+            display: block;
         }
 
         footer p {
@@ -466,7 +479,7 @@
                 gap: 1rem;
             }
 
-            .logos-header img {
+            .logo-container img {
                 height: 60px;
             }
 
@@ -514,8 +527,12 @@
     <section class="hero">
         <div class="hero-content">
             <div class="logos-header">
-                <img src="fedecamaras-anzoategui.png" alt="Fedecámaras Anzoátegui">
-                <img src="camara-comercio-lecheria.png" alt="Cámara de Comercio Lechería">
+                <div class="logo-container">
+                    <img src="fedecamaras-anzoategui.png" alt="Fedecámaras Anzoátegui">
+                </div>
+                <div class="logo-container">
+                    <img src="camara-comercio-lecheria.png" alt="Cámara de Comercio Lechería">
+                </div>
             </div>
 
             <h1>Ruta del Éxito Comercial</h1>
@@ -661,8 +678,12 @@
     <!-- Footer -->
     <footer>
         <div class="footer-logos">
-            <img src="fedecamaras-anzoategui.png" alt="Fedecámaras Anzoátegui">
-            <img src="camara-comercio-lecheria.png" alt="Cámara de Comercio Lechería">
+            <div class="footer-logo-container">
+                <img src="fedecamaras-anzoategui.png" alt="Fedecámaras Anzoátegui">
+            </div>
+            <div class="footer-logo-container">
+                <img src="camara-comercio-lecheria.png" alt="Cámara de Comercio Lechería">
+            </div>
         </div>
         <p><strong>Organizan:</strong> Fedecámaras Anzoátegui & Cámara de Comercio Lechería</p>
         <p><strong>Fecha:</strong> 10 de Septiembre de 2026 | <strong>Hora:</strong> 9:00 AM</p>
